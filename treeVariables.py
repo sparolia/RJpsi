@@ -1,26 +1,16 @@
-'''
-In this file you can define the branch to be included in the flat ntuple.
-You can find some basic quantities here, expand with more specific observables,
-such as isolation etc...
-Check NanoAOD content here
-https://cms-nanoaod-integration.web.cern.ch/integration/master-102X/mc102X_doc.html#Tau
-'''
 import numpy as np
-import struct # convert packed formats to native python https://docs.python.org/2/library/struct.html#struct-format-strings
 
 class Variable(object):
-    
+
     def __init__(self, name, getter):
         self._name   = name
         self._getter = getter
-    
+
     def name(self):
         return self._name
-    
+
     def value(self, event):
         return self._getter(event)
-
- 
 
 branches_event = [
     Variable('run'         , lambda ev : ev.eventAuxiliary().run()            ),
@@ -36,6 +26,19 @@ branches_bc = [
     Variable('bc_mass'     , lambda ev : ev.thebc.mass()          ),
 ]
 
+branches_tau = [
+    Variable('tau_pt'       , lambda ev : ev.thetau.pt()              if hasattr(ev, 'thetau') else -99.),
+    Variable('tau_eta'      , lambda ev : ev.thetau.eta()             if hasattr(ev, 'thetau') else -99.),
+    Variable('tau_phi'      , lambda ev : ev.thetau.phi()             if hasattr(ev, 'thetau') else -99.),
+    Variable('tau_charge'   , lambda ev : -np.sign(ev.thetau.pdgId()) if hasattr(ev, 'thetau') else -99.),
+]
+
+branches_taunu = [
+    Variable('taunu_pt'     , lambda ev : ev.thetaunu.pt()  if hasattr(ev, 'thetaunu') else -99.),
+    Variable('taunu_eta'    , lambda ev : ev.thetaunu.eta() if hasattr(ev, 'thetaunu') else -99.),
+    Variable('taunu_phi'    , lambda ev : ev.thetaunu.phi() if hasattr(ev, 'thetaunu') else -99.),
+]
+
 branches_mu = [
     Variable('mu_pt'       , lambda ev : ev.themu.pt()             ),
     Variable('mu_eta'      , lambda ev : ev.themu.eta()            ),
@@ -43,16 +46,17 @@ branches_mu = [
     Variable('mu_charge'   , lambda ev : -np.sign(ev.themu.pdgId())),
 ]
 
-branches_nu = [
-    Variable('nu_pt'       , lambda ev : ev.thenu.pt()  ),
-    Variable('nu_eta'      , lambda ev : ev.thenu.eta() ),
-    Variable('nu_phi'      , lambda ev : ev.thenu.phi() ),
+branches_munu = [
+    Variable('munu_pt'       , lambda ev : ev.themunu.pt()  ),
+    Variable('munu_eta'      , lambda ev : ev.themunu.eta() ),
+    Variable('munu_phi'      , lambda ev : ev.themunu.phi() ),
 ]
 
 branches_jpsi = [
     Variable('jpsi_pt'     , lambda ev : ev.thejpsi.pt()   ),
     Variable('jpsi_eta'    , lambda ev : ev.thejpsi.eta()  ),
     Variable('jpsi_phi'    , lambda ev : ev.thejpsi.phi()  ),
+    Variable('jpsi_mass'   , lambda ev : ev.thejpsi.mass() ),
 ]
 
 branches_mu1 = [
@@ -69,4 +73,4 @@ branches_mu2 = [
     Variable('mu2_charge'  , lambda ev : -np.sign(ev.themu2.pdgId())),
 ]
 
-branches_all = branches_event + branches_bc + branches_mu + branches_nu + branches_jpsi + branches_mu1 + branches_mu2
+branches_all = branches_event + branches_bc + branches_tau + branches_taunu + branches_mu + branches_munu + branches_jpsi + branches_mu1 + branches_mu2
