@@ -15,13 +15,13 @@ from files import files_jpsi_munu, files_jpsi_taunu
 # dccp -H dcap://t3se01.psi.ch:22125//pnfs/psi.ch/cms/trivcat/store/user/sleontsi/PYTHIA8_BJpsimunu_13TeV_2019_02_28_1/miniAOD/miniAOD_PYTHIA8_BJpsimunu_13TeV_2019_02_28_1_65.root  .
 
 # possible channels: mu, tau
-channel = 'tau'
-# channel = 'mu'
+# channel = 'tau'
+channel = 'mu'
 
 ##########################################################################################
 # initialise output files to save the flat ntuples
-outfile = ROOT.TFile('bc_jpsi_mu_nu_gen.root', 'recreate')
-outfile = ROOT.TFile('bc_jpsi_tau_nu_gen.root', 'recreate')
+if channel == 'mu' : outfile = ROOT.TFile('bc_jpsi_mu_nu_gen.root' , 'recreate')
+if channel == 'tau': outfile = ROOT.TFile('bc_jpsi_tau_nu_gen.root', 'recreate')
 branches_all_names = [br.name() for br in branches_all]
 ntuple = ROOT.TNtuple('tree', 'tree', ':'.join(branches_all_names))
 tofill = OrderedDict(zip(branches_all_names, [-99.]*len(branches_all_names))) # initialise all branches to unphysical -99       
@@ -72,7 +72,7 @@ for i, ev in enumerate(events):
        
         if channel=='mu':
             ev.themu   = [ev.thebc.daughter(jj) for jj in range(ev.thebc.numberOfDaughters()) if abs(ev.thebc.daughter(jj).pdgId())==13 ][0]
-            ev.thenu   = [ev.thebc.daughter(jj) for jj in range(ev.thebc.numberOfDaughters()) if abs(ev.thebc.daughter(jj).pdgId())==14 ][0]
+            ev.themunu = [ev.thebc.daughter(jj) for jj in range(ev.thebc.numberOfDaughters()) if abs(ev.thebc.daughter(jj).pdgId())==14 ][0]
 
         if channel=='tau':
             ev.thetau   = [ev.thebc.daughter(jj) for jj in range(ev.thebc.numberOfDaughters())  if abs(ev.thebc.daughter(jj).pdgId())==15 ][0]
