@@ -16,14 +16,17 @@ branches_event = [
     Variable('run'         , lambda ev : ev.eventAuxiliary().run()            ),
     Variable('lumi'        , lambda ev : ev.eventAuxiliary().luminosityBlock()),
     Variable('event'       , lambda ev : ev.eventAuxiliary().event()          ),
+    Variable('pv_x'        , lambda ev : ev.thebc.vertex().x()     if hasattr(ev, 'thebc') else ev.the_pv.x()),
+    Variable('pv_y'        , lambda ev : ev.thebc.vertex().y()     if hasattr(ev, 'thebc') else ev.the_pv.y()),
+    Variable('pv_z'        , lambda ev : ev.thebc.vertex().z()     if hasattr(ev, 'thebc') else ev.the_pv.z()),
 ]
 
 branches_bc = [
-    Variable('bc_pt'       , lambda ev : ev.thebc.pt()            ),
-    Variable('bc_eta'      , lambda ev : ev.thebc.eta()           ),
-    Variable('bc_phi'      , lambda ev : ev.thebc.phi()           ),
-    Variable('bc_charge'   , lambda ev : np.sign(ev.thebc.pdgId())),
-    Variable('bc_mass'     , lambda ev : ev.thebc.mass()          ),
+    Variable('bc_pt'       , lambda ev : ev.thebc.pt()             if hasattr(ev, 'thebc') else -99.),
+    Variable('bc_eta'      , lambda ev : ev.thebc.eta()            if hasattr(ev, 'thebc') else -99.),
+    Variable('bc_phi'      , lambda ev : ev.thebc.phi()            if hasattr(ev, 'thebc') else -99.),
+    Variable('bc_charge'   , lambda ev : np.sign(ev.thebc.pdgId()) if hasattr(ev, 'thebc') else -99.),
+    Variable('bc_mass'     , lambda ev : ev.thebc.mass()           if hasattr(ev, 'thebc') else -99.),
 ]
 
 branches_tau = [
@@ -46,17 +49,27 @@ branches_mu = [
     Variable('mu_charge'   , lambda ev : -np.sign(ev.themu.pdgId())),
 ]
 
+branches_pi = [
+    Variable('pi_pt'       , lambda ev : ev.thepi.pt()             ),
+    Variable('pi_eta'      , lambda ev : ev.thepi.eta()            ),
+    Variable('pi_phi'      , lambda ev : ev.thepi.phi()            ),
+    Variable('pi_charge'   , lambda ev : np.sign(ev.thepi.pdgId()) ),
+]
+
 branches_munu = [
-    Variable('munu_pt'       , lambda ev : ev.themunu.pt()  ),
-    Variable('munu_eta'      , lambda ev : ev.themunu.eta() ),
-    Variable('munu_phi'      , lambda ev : ev.themunu.phi() ),
+    Variable('munu_pt'       , lambda ev : ev.themunu.pt()  if hasattr(ev, 'themunu') else -99.),
+    Variable('munu_eta'      , lambda ev : ev.themunu.eta() if hasattr(ev, 'themunu') else -99.),
+    Variable('munu_phi'      , lambda ev : ev.themunu.phi() if hasattr(ev, 'themunu') else -99.),
 ]
 
 branches_jpsi = [
-    Variable('jpsi_pt'     , lambda ev : ev.thejpsi.pt()   ),
-    Variable('jpsi_eta'    , lambda ev : ev.thejpsi.eta()  ),
-    Variable('jpsi_phi'    , lambda ev : ev.thejpsi.phi()  ),
-    Variable('jpsi_mass'   , lambda ev : ev.thejpsi.mass() ),
+    Variable('jpsi_pt'     , lambda ev : ev.thejpsi.pt()        ),
+    Variable('jpsi_eta'    , lambda ev : ev.thejpsi.eta()       ),
+    Variable('jpsi_phi'    , lambda ev : ev.thejpsi.phi()       ),
+    Variable('jpsi_mass'   , lambda ev : ev.thejpsi.mass()      ),
+    Variable('sv_x'        , lambda ev : ev.thejpsi.vertex().x()),
+    Variable('sv_y'        , lambda ev : ev.thejpsi.vertex().y()),
+    Variable('sv_z'        , lambda ev : ev.thejpsi.vertex().z()),
 ]
 
 branches_mu1 = [
@@ -74,3 +87,4 @@ branches_mu2 = [
 ]
 
 branches_all = branches_event + branches_bc + branches_tau + branches_taunu + branches_mu + branches_munu + branches_jpsi + branches_mu1 + branches_mu2
+branches_jpsi_pi = branches_event + branches_bc + branches_pi + branches_jpsi + branches_mu1 + branches_mu2

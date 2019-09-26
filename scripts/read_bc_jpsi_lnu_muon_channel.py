@@ -20,8 +20,8 @@ channel = 'mu'
 
 ##########################################################################################
 # initialise output files to save the flat ntuples
-if channel == 'mu' : outfile = ROOT.TFile('bc_jpsi_mu_nu_gen.root' , 'recreate')
-if channel == 'tau': outfile = ROOT.TFile('bc_jpsi_tau_nu_gen.root', 'recreate')
+if channel == 'mu' : outfile = ROOT.TFile('bc_jpsi_mu_nu_gen_v2.root' , 'recreate')
+if channel == 'tau': outfile = ROOT.TFile('bc_jpsi_tau_nu_gen_v2.root', 'recreate')
 branches_all_names = [br.name() for br in branches_all]
 ntuple = ROOT.TNtuple('tree', 'tree', ':'.join(branches_all_names))
 tofill = OrderedDict(zip(branches_all_names, [-99.]*len(branches_all_names))) # initialise all branches to unphysical -99       
@@ -30,6 +30,7 @@ tofill = OrderedDict(zip(branches_all_names, [-99.]*len(branches_all_names))) # 
 # Get ahold of the events
 files = files_jpsi_munu if channel=='mu' else files_jpsi_taunu
 events = Events(files)
+# events = Events('miniAOD_1_muon.root')
 maxevents = -1
 maxevents = maxevents if maxevents>=0 else events.size() # total number of events in the files
 totevents = events.size() # total number of events in the files
@@ -40,7 +41,7 @@ handles = OrderedDict()
 handles['taus' ] = ('slimmedTaus'       , Handle('std::vector<pat::Tau>')              )
 handles['muon' ] = ('slimmedMuons'      , Handle('std::vector<pat::Muon>')             )
 handles['genp' ] = ('prunedGenParticles', Handle('std::vector<reco::GenParticle>')     )
-handles['genpk'] = ('packedGenParticles', Handle('std::vector<pat::PackedGenParticle>'))
+# handles['genpk'] = ('packedGenParticles', Handle('std::vector<pat::PackedGenParticle>'))
 
 ##########################################################################################
 # start looping on the events
@@ -88,6 +89,8 @@ for i, ev in enumerate(events):
 #         import pdb ; pdb.set_trace()
 #         print '\t\t=============================> event', ev.eventAuxiliary().event()
         continue
+    
+#     import pdb ;  pdb.set_trace()    
     
     for ibranch in branches_all:
         tofill[ibranch.name()] = ibranch.value(ev)
