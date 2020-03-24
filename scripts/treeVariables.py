@@ -19,6 +19,8 @@ branches_event = [
     Variable('pv_x'        , lambda ev : ev.thebc.vertex().x()     if hasattr(ev, 'thebc') else ev.the_pv.x()),
     Variable('pv_y'        , lambda ev : ev.thebc.vertex().y()     if hasattr(ev, 'thebc') else ev.the_pv.y()),
     Variable('pv_z'        , lambda ev : ev.thebc.vertex().z()     if hasattr(ev, 'thebc') else ev.the_pv.z()),
+    Variable('trigDimuon0' , lambda ev : ev.triggerDimuon0         if hasattr(ev, 'trig') else -99.), 
+    Variable('trigJpsiTk'  , lambda ev : ev.triggerJpsiTk          if hasattr(ev, 'trig') else -99.), 
 ]
 
 branches_bc = [
