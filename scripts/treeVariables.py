@@ -39,9 +39,16 @@ branches_tau = [
 ]
 
 branches_taunu = [
+    Variable('taunu_id'     , lambda ev : ev.thetaunu.pdgId()  if hasattr(ev, 'thetaunu') else -99.),
     Variable('taunu_pt'     , lambda ev : ev.thetaunu.pt()  if hasattr(ev, 'thetaunu') else -99.),
     Variable('taunu_eta'    , lambda ev : ev.thetaunu.eta() if hasattr(ev, 'thetaunu') else -99.),
     Variable('taunu_phi'    , lambda ev : ev.thetaunu.phi() if hasattr(ev, 'thetaunu') else -99.),
+]
+branches_taunu = [
+    Variable('taunu2_id'     , lambda ev : ev.thetaunu2.pdgId()  if hasattr(ev, 'thetaunu2') else -99.),
+    Variable('taunu2_pt'     , lambda ev : ev.thetaunu2.pt()  if hasattr(ev, 'thetaunu2') else -99.),
+    Variable('taunu2_eta'    , lambda ev : ev.thetaunu2.eta() if hasattr(ev, 'thetaunu2') else -99.),
+    Variable('taunu2_phi'    , lambda ev : ev.thetaunu2.phi() if hasattr(ev, 'thetaunu2') else -99.),
 ]
 
 branches_mu = [
@@ -59,6 +66,7 @@ branches_pi = [
 ]
 
 branches_munu = [
+    Variable('munu_id'       , lambda ev : ev.themunu.pdgId()  if hasattr(ev, 'themunu') else -99.),
     Variable('munu_pt'       , lambda ev : ev.themunu.pt()  if hasattr(ev, 'themunu') else -99.),
     Variable('munu_eta'      , lambda ev : ev.themunu.eta() if hasattr(ev, 'themunu') else -99.),
     Variable('munu_phi'      , lambda ev : ev.themunu.phi() if hasattr(ev, 'themunu') else -99.),

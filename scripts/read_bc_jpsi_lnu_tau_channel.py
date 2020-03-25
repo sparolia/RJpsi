@@ -89,6 +89,7 @@ for i, ev in enumerate(events):
             # the following two lines may fail for non-muonic tau decays
             ev.themu    = [ev.thetau.daughter(jj) for jj in range(ev.thetau.numberOfDaughters()) if abs(ev.thetau.daughter(jj).pdgId())==13 ][0]
             ev.themunu  = [ev.thetau.daughter(jj) for jj in range(ev.thetau.numberOfDaughters()) if abs(ev.thetau.daughter(jj).pdgId())==14 ][0]
+            ev.thetaunu2  = [ev.thetau.daughter(jj) for jj in range(ev.thetau.numberOfDaughters()) if abs(ev.thetau.daughter(jj).pdgId())==16 ][0]
 
         mm_from_jpsi = sorted([ev.thejpsi.daughter(0), ev.thejpsi.daughter(1)], key=lambda x : x.pt(), reverse=True)
         ev.themu1 = mm_from_jpsi[0]
