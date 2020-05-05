@@ -7,7 +7,7 @@ from collections import OrderedDict
 from DataFormats.FWLite import Events, Handle
 from PhysicsTools.HeppyCore.utils.deltar import deltaR, deltaPhi
 from treeVariables import branches_all # here the ntuple branches are defined
-from files import files_jpsi_munu, files_jpsi_taunu
+from files import files_jpsi_munu, files_jpsi_taunu, files_centralproduction_jpsi_taunu
 # from IPython.parallel import Client
 # from utils import isGenHadTau, finalDaughters, printer # utility functions
 
@@ -28,7 +28,8 @@ tofill = OrderedDict(zip(branches_all_names, [-99.]*len(branches_all_names))) # 
 
 ##########################################################################################
 # Get ahold of the events
-files = files_jpsi_munu if channel=='mu' else files_jpsi_taunu
+#files = files_jpsi_munu if channel=='mu' else files_jpsi_taunu
+files = files_jpsi_munu if channel=='mu' else files_centralproduction_jpsi_taunu
 events = Events(files)
 # events = Events('miniAOD_1_muon.root')
 maxevents = -1

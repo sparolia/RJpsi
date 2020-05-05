@@ -44,7 +44,7 @@ branches_taunu = [
     Variable('taunu_eta'    , lambda ev : ev.thetaunu.eta() if hasattr(ev, 'thetaunu') else -99.),
     Variable('taunu_phi'    , lambda ev : ev.thetaunu.phi() if hasattr(ev, 'thetaunu') else -99.),
 ]
-branches_taunu = [
+branches_taunu2 = [
     Variable('taunu2_id'     , lambda ev : ev.thetaunu2.pdgId()  if hasattr(ev, 'thetaunu2') else -99.),
     Variable('taunu2_pt'     , lambda ev : ev.thetaunu2.pt()  if hasattr(ev, 'thetaunu2') else -99.),
     Variable('taunu2_eta'    , lambda ev : ev.thetaunu2.eta() if hasattr(ev, 'thetaunu2') else -99.),
@@ -96,5 +96,5 @@ branches_mu2 = [
     Variable('mu2_charge'  , lambda ev : -np.sign(ev.themu2.pdgId())),
 ]
 
-branches_all = branches_event + branches_bc + branches_tau + branches_taunu + branches_mu + branches_munu + branches_jpsi + branches_mu1 + branches_mu2
+branches_all = branches_event + branches_bc + branches_tau + branches_taunu + branches_taunu2 + branches_mu + branches_munu + branches_jpsi + branches_mu1 + branches_mu2
 branches_jpsi_pi = branches_event + branches_bc + branches_pi + branches_jpsi + branches_mu1 + branches_mu2
